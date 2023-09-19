@@ -26,18 +26,22 @@ const AddProduct = () => {
   const onSubmitHandler = async (event) => {
     event.preventDefault();
     console.log("submitted");
-    const res = await axios.post("/product", {
-      title,
-      description,
-      image,
-      price,
-    });
-    console.log(res);
+    try {
+      const res = await axios.post("/product", {
+        title,
+        description,
+        image,
+        price,
+      });
+      console.log(res);
 
-    setTitle("");
-    setDescription("");
-    setImage("");
-    setPrice(0);
+      setTitle("");
+      setDescription("");
+      setImage("");
+      setPrice(0);
+    } catch (err) {
+      console.log(err);
+    }
   };
   return (
     <form onSubmit={onSubmitHandler}>

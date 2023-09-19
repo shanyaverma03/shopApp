@@ -1,4 +1,18 @@
+const Product = require("../models/product");
+
 exports.postAddProduct = (req, res, next) => {
-  console.log(req.body);
-  res.send("I am in post product");
+  const title = req.body.title;
+  const description = req.body.description;
+  const image = req.body.image;
+  const price = req.body.price;
+  const product = new Product(title, description, image, price);
+
+  product
+    .save()
+    .then((savedProduct) => {
+      res.json(savedProduct);
+    })
+    .catch((err) => {
+      res.status(500).send(err.message);
+    });
 };

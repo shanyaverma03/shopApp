@@ -8,5 +8,19 @@ class Product {
     this.price = price;
   }
 
-  save() {}
+  save() {
+    const db = getDb();
+    return db
+      .collection("products")
+      .insertOne(this)
+      .then((result) => {
+        console.log(result);
+        return result;
+      })
+      .catch((err) => {
+        return err;
+      });
+  }
 }
+
+module.exports = Product;

@@ -12,6 +12,5 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.post("/product", adminController.postAddProduct);
 
-mongoConnect(() => {
-  app.listen(8080);
-});
+mongoConnect();
+app.listen(8080);
