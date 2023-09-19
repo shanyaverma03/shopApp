@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState } from "react";
 
 const AddProduct = () => {
@@ -22,9 +23,17 @@ const AddProduct = () => {
     setPrice(event.target.value);
   };
 
-  const onSubmitHandler = (event) => {
+  const onSubmitHandler = async (event) => {
     event.preventDefault();
     console.log("submitted");
+    const res = await axios.post("/product", {
+      title,
+      description,
+      image,
+      price,
+    });
+    console.log(res);
+
     setTitle("");
     setDescription("");
     setImage("");
