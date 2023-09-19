@@ -1,7 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 
-const mongoConnect = require("./util/database");
+const mongoConnect = require("./util/database").mongoConnect;
 
 const app = express();
 
@@ -13,6 +13,6 @@ app.post("/product", (req, res, next) => {
   res.send("I am in post product");
 });
 
-mongoConnect((result) => {
+mongoConnect(() => {
   app.listen(8080);
 });
