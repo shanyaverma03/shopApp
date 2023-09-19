@@ -1,5 +1,7 @@
+import AddProduct from "../Components/admin/AddProduct";
+
 const AddProductPage = () => {
-  return <h1>Add product page</h1>;
+  return <AddProduct />;
 };
 
 export default AddProductPage;
