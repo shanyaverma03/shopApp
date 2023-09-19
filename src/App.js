@@ -1,8 +1,15 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom"; //helps us to define the routes that we want to support in this app
 
 import HomePage from "./pages/HomePage";
+import RootLayout from "./pages/RootLayout";
 
-const router = createBrowserRouter([{ path: "/", element: <HomePage /> }]);
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <RootLayout />,
+    children: [{ path: "/", element: <HomePage /> }],
+  },
+]);
 
 function App() {
   return <RouterProvider router={router} />;

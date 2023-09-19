@@ -1,13 +1,21 @@
+import { Link } from "react-router-dom";
+
 const Navigation = () => {
   return (
-    <ul>
-      <li>Shop</li>
-      <li>Products</li>
-      <li>Cart</li>
-      <li>Orders</li>
-      <li>Add Product</li>
-      <li>Add Product</li>
-    </ul>
+    <header>
+      <nav>
+        <ul>
+          <li>
+            <Link to="/shop">Shop</Link>
+            <Link to="/products">Products</Link>
+            <Link to="/cart">Cart</Link>
+            <Link to="/orders">Orders</Link>
+            <Link to="/add-product">Add Product</Link>
+            <Link to="/admin-products">Admin Products</Link>
+          </li>
+        </ul>
+      </nav>
+    </header>
   );
 };
 
