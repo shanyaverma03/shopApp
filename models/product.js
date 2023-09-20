@@ -21,6 +21,22 @@ class Product {
         return err;
       });
   }
+
+  static fetchAll() {
+    //find returns a Cursor
+    const db = getDb();
+    return db
+      .collection("products")
+      .find()
+      .toArray()
+      .then((products) => {
+        console.log(products);
+        return products;
+      })
+      .catch((err) => {
+        return err;
+      });
+  }
 }
 
 module.exports = Product;

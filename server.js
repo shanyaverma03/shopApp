@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 
 const adminController = require("./controllers/admin");
+const shopController = require("./controllers/shop");
 
 const mongoConnect = require("./util/database").mongoConnect;
 
@@ -11,6 +12,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.post("/product", adminController.postAddProduct);
+app.get("/products", shopController.getProducts);
 
 mongoConnect();
 app.listen(8080);
