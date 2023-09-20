@@ -1,0 +1,5 @@
+.navigation {
+  background-color: rgb(243, 147, 179);
+  display: flex;
+  justify-content: space-around;
+}
