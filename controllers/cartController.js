@@ -18,6 +18,14 @@ exports.addToCart = (req, res, next) => {
 };
 
 exports.getCart = (req, res, next) => {
-  const cart = req.user.getCart();
-  return res.json(cart);
+  req.user
+    .getCart()
+    .then((products) => {
+      console.log(products);
+      res.json(products);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send(err.message);
+    });
 };
