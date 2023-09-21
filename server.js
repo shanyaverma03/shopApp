@@ -14,6 +14,7 @@ app.post("/product", productController.addProduct);
 app.get("/products", productController.getProducts);
 
 app.get("/product/:productId", productController.getProduct);
+app.put("/product/:productId", productController.updateProduct);
 
 mongoConnect();
 app.listen(8080);

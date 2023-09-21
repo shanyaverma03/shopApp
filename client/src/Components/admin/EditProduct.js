@@ -47,7 +47,23 @@ const EditProduct = () => {
     setPrice(event.target.value);
   };
 
-  const onSubmitHandler = () => {};
+  const onSubmitHandler = async (event) => {
+    event.preventDefault();
+    try {
+      console.log(title);
+      const response = await axios.put(`/product/${productId}`, {
+        title,
+        description,
+        image,
+        price,
+        productId,
+      });
+
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <form onSubmit={onSubmitHandler}>
