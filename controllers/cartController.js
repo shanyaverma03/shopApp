@@ -29,3 +29,11 @@ exports.getCart = (req, res, next) => {
       res.status(500).send(err.message);
     });
 };
+
+exports.deleteFromCart = (req, res, next) => {
+  const prodId = req.body.productId;
+  req.user
+    .deleteItemFromCart(prodId)
+    .then(res.send("deleted"))
+    .catch((err) => res.status(500).send(err.message));
+};
