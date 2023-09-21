@@ -8,9 +8,9 @@ const AdminProducts = () => {
   const [adminProducts, setAdminProducts] = useState([]);
 
   useEffect(() => {
-    const fetchAdminProducts = async () => {
+    const fetchProducts = async () => {
       try {
-        const response = await axios.get("/admin/products");
+        const response = await axios.get("/products");
         console.log(response.data);
         setAdminProducts(response.data);
       } catch (err) {
@@ -18,7 +18,7 @@ const AdminProducts = () => {
       }
     };
 
-    fetchAdminProducts();
+    fetchProducts();
   }, []);
 
   return (

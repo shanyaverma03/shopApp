@@ -1,6 +1,6 @@
 const Product = require("../models/product");
 
-exports.postAddProduct = (req, res, next) => {
+exports.addProduct = (req, res, next) => {
   const title = req.body.title;
   const description = req.body.description;
   const image = req.body.image;
@@ -17,7 +17,7 @@ exports.postAddProduct = (req, res, next) => {
     });
 };
 
-exports.getAdminProducts = (req, res, next) => {
+exports.getProducts = (req, res, next) => {
   Product.fetchAll()
     .then((products) => {
       res.send(products);
@@ -26,3 +26,16 @@ exports.getAdminProducts = (req, res, next) => {
       res.status(500).send(err.message);
     });
 };
+
+exports.getProduct = (req, res, next) => {
+  const prodId = req.params.productId;
+  Product.findById(prodId)
+    .then((product) => {
+      res.json(product);
+    })
+    .catch((err) => {
+      res.status(500).send(err.message);
+    });
+};
+
+exports.updateProduct = (req, res, next) => {};

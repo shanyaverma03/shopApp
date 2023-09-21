@@ -9,8 +9,7 @@ const ProductDetail = () => {
 
   useEffect(() => {
     const fetchProductDetails = async () => {
-      const url = `/products/${productId}`;
-      const response = await axios.get(url);
+      const response = await axios.get(`/product/${productId}`);
       console.log(response);
       console.log(productId);
       const id = response.data._id;
@@ -29,7 +28,7 @@ const ProductDetail = () => {
     };
 
     fetchProductDetails();
-  }, []);
+  }, [productId]);
 
   return (
     <div>

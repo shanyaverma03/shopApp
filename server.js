@@ -1,8 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 
-const adminController = require("./controllers/admin");
-const shopController = require("./controllers/shop");
+const productController = require("./controllers/productController");
 
 const mongoConnect = require("./util/database").mongoConnect;
 
@@ -11,10 +10,10 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.post("/admin/product", adminController.postAddProduct);
-app.get("/admin/products", adminController.getAdminProducts);
-app.get("/products", shopController.getProducts);
-app.get("/products/:productId", shopController.getProduct);
+app.post("/product", productController.addProduct);
+app.get("/products", productController.getProducts);
+
+app.get("/product/:productId", productController.getProduct);
 
 mongoConnect();
 app.listen(8080);
