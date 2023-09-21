@@ -1,10 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import CartItem from "./CartItem";
 
 const Cart = () => {
   const [cart, setCart] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getCart = async () => {
@@ -20,6 +22,16 @@ const Cart = () => {
     getCart();
   }, []);
 
+  const orderHandler = async () => {
+    try {
+      const response = await axios.post("/addOrder");
+      console.log(response);
+      navigate("/orders");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div>
       {cart.map((product) => (
@@ -30,7 +42,7 @@ const Cart = () => {
           quantity={product.quantity}
         />
       ))}
-      <button>Order Now!</button>
+      <button onClick={orderHandler}>Order Now!</button>
     </div>
   );
 };
