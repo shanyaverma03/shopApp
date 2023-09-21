@@ -58,7 +58,6 @@ class User {
     const productIds = this.cart.items.map((product) => {
       return product.productId;
     });
-    //find all the products whose ids are in the cart items
     return db
       .collection("products")
       .find({ _id: { $in: productIds } })
@@ -78,6 +77,20 @@ class User {
       .catch((err) => {
         return err;
       });
+  }
+
+  deleteItemFromCart(productId) {
+    const currentCartItems = this.cart.items;
+    const updatedCartItems = currentCartItems.filter(
+      (product) => product.productId.toString() !== productId.toString()
+    );
+    const db = getDb();
+    return db
+      .collection("users")
+      .updateOne(
+        { _id: new mongodb.ObjectId(this._id) },
+        { $set: { cart: { items: updatedCartItems } } }
+      );
   }
 
   static findById(userId) {
