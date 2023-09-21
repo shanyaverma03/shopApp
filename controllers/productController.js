@@ -54,3 +54,12 @@ exports.updateProduct = (req, res, next) => {
       console.log(err);
     });
 };
+
+exports.deleteProduct = (req, res, next) => {
+  const prodId = req.params.productId;
+  Product.deleteById(prodId)
+    .then((message) => {
+      res.send(message);
+    })
+    .catch((err) => console.log(err));
+};
