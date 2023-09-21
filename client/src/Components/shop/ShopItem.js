@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
 import classes from "./ShopItem.module.css";
+import axios from "axios";
 
 const ShopItem = (props) => {
   const navigate = useNavigate();
@@ -8,6 +9,13 @@ const ShopItem = (props) => {
   const redirectToProductPage = () => {
     console.log("in redirect", props.id);
     navigate(`/product/${props.id}`);
+  };
+
+  const addToCartHandler = async () => {
+    const response = await axios.post("/cart", {
+      productId: props.id,
+    });
+    console.log(response);
   };
 
   return (
@@ -21,7 +29,7 @@ const ShopItem = (props) => {
           {props.showDetailsButton && (
             <button onClick={redirectToProductPage}>Details</button>
           )}
-          <button>Add to Cart</button>
+          <button onClick={addToCartHandler}>Add to Cart</button>
         </div>
       </div>
     </div>

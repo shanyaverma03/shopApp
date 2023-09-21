@@ -1,4 +1,5 @@
 const Product = require("../models/product");
+const User = require("../models/user");
 
 exports.addProduct = (req, res, next) => {
   const title = req.body.title;
@@ -68,5 +69,20 @@ exports.deleteProduct = (req, res, next) => {
     .then((message) => {
       res.send(message);
     })
-    .catch((err) => console.log(err));
+    .catch((err) => res.send(err.message));
+};
+
+exports.addToCart = (req, res, next) => {
+  const prodId = req.body.productId;
+  Product.findById(prodId)
+    .then((product) => {
+      return req.user.addToCart(product);
+    })
+    .then((result) => {
+      console.log(result);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send(err.message);
+    });
 };
