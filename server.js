@@ -32,6 +32,7 @@ app.delete("/product/:productId", productController.deleteProduct);
 app.post("/cart", cartController.addToCart);
 app.get("/cart", cartController.getCart);
 app.post("/delete-cart-item", cartController.deleteFromCart);
+app.post("/addOrder", cartController.addOrder);
 
 mongoConnect();
 app.listen(8080);

@@ -37,3 +37,17 @@ exports.deleteFromCart = (req, res, next) => {
     .then(res.send("deleted"))
     .catch((err) => res.status(500).send(err.message));
 };
+
+exports.addOrder = (req, res, next) => {
+  const user = req.user;
+  user
+    .addOrder()
+    .then((result) => {
+      console.log(result);
+      res.json(result);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send(err.message);
+    });
+};
