@@ -16,6 +16,7 @@ const ShopItem = (props) => {
       productId: props.id,
     });
     console.log(response);
+    navigate("/cart");
   };
 
   return (
