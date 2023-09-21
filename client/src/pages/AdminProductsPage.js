@@ -1,5 +1,7 @@
+import AdminProducts from "../Components/admin/AdminProducts";
+
 const AdminProductsPage = () => {
-  return <h1>Admin products here</h1>;
+  return <AdminProducts />;
 };
 
 export default AdminProductsPage;
