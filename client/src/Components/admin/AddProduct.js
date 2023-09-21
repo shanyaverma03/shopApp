@@ -1,11 +1,14 @@
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const AddProduct = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
   const [price, setPrice] = useState(0);
+
+  const navigate = useNavigate();
 
   const titleChangeHandler = (event) => {
     setTitle(event.target.value);
@@ -39,6 +42,7 @@ const AddProduct = () => {
       setDescription("");
       setImage("");
       setPrice(0);
+      navigate("/admin/products");
     } catch (err) {
       console.log(err);
     }
