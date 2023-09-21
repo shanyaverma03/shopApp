@@ -7,6 +7,7 @@ const Navigation = () => {
     <header className={classes.navigation}>
       <Link to="/">Shop</Link>
       <Link to="/admin/add-product">Add Product</Link>
+      <Link to="/admin/products">Admin Products</Link>
     </header>
   );
 };
