@@ -16,7 +16,6 @@ const EditProduct = () => {
       const response = await axios.get(url);
       console.log(response);
       console.log(productId);
-      const id = response.data._id;
       const title = response.data.title;
       const description = response.data.description;
       const price = response.data.price;
