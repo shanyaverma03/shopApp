@@ -39,6 +39,7 @@ const ProductDetail = () => {
         description={productDetails.description}
         price={productDetails.price}
         image={productDetails.image}
+        showDetailsButton={false}
       />
     </div>
   );

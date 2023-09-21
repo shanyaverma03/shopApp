@@ -18,7 +18,9 @@ const ShopItem = (props) => {
         <p>{props.description}</p>
         <p>{props.price}</p>
         <div className={classes.actions}>
-          <button onClick={redirectToProductPage}>Details</button>
+          {props.showDetailsButton && (
+            <button onClick={redirectToProductPage}>Details</button>
+          )}
           <button>Add to Cart</button>
         </div>
       </div>
