@@ -27,7 +27,7 @@ const AddProduct = () => {
     event.preventDefault();
     console.log("submitted");
     try {
-      const res = await axios.post("/product", {
+      const res = await axios.post("/admin/product", {
         title,
         description,
         image,

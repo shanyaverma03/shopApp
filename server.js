@@ -11,8 +11,9 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.post("/product", adminController.postAddProduct);
+app.post("/admin/product", adminController.postAddProduct);
 app.get("/products", shopController.getProducts);
+app.get("/products/:productId", shopController.getProduct);
 
 mongoConnect();
 app.listen(8080);

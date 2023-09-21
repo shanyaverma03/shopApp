@@ -26,6 +26,7 @@ const Products = () => {
         products.map((product) => (
           <ShopItem
             key={product._id}
+            id={product._id}
             title={product.title}
             description={product.description}
             price={product.price}
