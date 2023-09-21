@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 import classes from "./AdminProductItem.module.css";
 
@@ -7,6 +8,15 @@ const AdminProductItem = (props) => {
 
   const navToEditProductPage = () => {
     navigate(`/admin/edit-product/${props.id}`);
+  };
+
+  const deleteProductHandler = async () => {
+    try {
+      const response = await axios.delete(`/product/${props.id}`);
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -18,7 +28,7 @@ const AdminProductItem = (props) => {
         <p>{props.price}</p>
         <div className={classes.actions}>
           <button onClick={navToEditProductPage}>Edit</button>
-          <button>Delete</button>
+          <button onClick={deleteProductHandler}>Delete</button>
         </div>
       </div>
     </div>
