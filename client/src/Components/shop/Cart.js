@@ -34,14 +34,18 @@ const Cart = () => {
 
   return (
     <div>
-      {cart.map((product) => (
-        <CartItem
-          key={product._id}
-          id={product._id}
-          title={product.title}
-          quantity={product.quantity}
-        />
-      ))}
+      {cart.length > 0 ? (
+        cart.map((product) => (
+          <CartItem
+            key={product._id}
+            id={product._id}
+            title={product.title}
+            quantity={product.quantity}
+          />
+        ))
+      ) : (
+        <h1>The cart is empty!</h1>
+      )}
       <button onClick={orderHandler}>Order Now!</button>
     </div>
   );
