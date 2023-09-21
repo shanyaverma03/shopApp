@@ -4,6 +4,7 @@ import AddProductPage from "./pages/AddProductPage";
 import ShopPage from "./pages/ShopPage";
 import ProductDetailsPage from "./pages/ProductDetailsPage";
 import AdminProductsPage from "./pages/AdminProductsPage";
+import EditProductPage from "./pages/EditProductPage";
 
 const router = createBrowserRouter([
   {
@@ -14,6 +15,7 @@ const router = createBrowserRouter([
       { path: "/admin/add-product", element: <AddProductPage /> },
       { path: "/product/:productId", element: <ProductDetailsPage /> },
       { path: "/admin/products", element: <AdminProductsPage /> },
+      { path: "/admin/edit-product/:productId", element: <EditProductPage /> },
     ],
   },
 ]);
