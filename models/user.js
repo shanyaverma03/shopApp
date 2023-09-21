@@ -53,6 +53,10 @@ class User {
     );
   }
 
+  getCart() {
+    return this.cart;
+  }
+
   static findById(userId) {
     const db = getDb();
     return db

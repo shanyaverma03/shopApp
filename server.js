@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 
 const productController = require("./controllers/productController");
+const cartController = require("./controllers/cartController");
 
 const mongoConnect = require("./util/database").mongoConnect;
 
@@ -28,7 +29,8 @@ app.get("/product/:productId", productController.getProduct);
 app.put("/product/:productId", productController.updateProduct);
 app.delete("/product/:productId", productController.deleteProduct);
 
-app.post("/cart", productController.addToCart);
+app.post("/cart", cartController.addToCart);
+app.get("/cart", cartController.getCart);
 
 mongoConnect();
 app.listen(8080);
