@@ -24,7 +24,7 @@ const Cart = () => {
 
   const orderHandler = async () => {
     try {
-      const response = await axios.post("/addOrder");
+      const response = await axios.post("/order");
       console.log(response);
       navigate("/orders");
     } catch (err) {

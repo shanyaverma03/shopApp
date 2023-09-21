@@ -4,9 +4,7 @@ import classes from "./CartItem.module.css";
 const CartItem = (props) => {
   const deleteItemFromCartHandler = async () => {
     try {
-      const response = await axios.post("/delete-cart-item", {
-        productId: props.id,
-      });
+      const response = await axios.delete(`/cart/${props.id}`);
       console.log(response);
     } catch (err) {
       console.log(err);

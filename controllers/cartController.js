@@ -31,7 +31,7 @@ exports.getCart = (req, res, next) => {
 };
 
 exports.deleteFromCart = (req, res, next) => {
-  const prodId = req.body.productId;
+  const prodId = req.params.productId;
   req.user
     .deleteItemFromCart(prodId)
     .then(res.send("deleted"))
