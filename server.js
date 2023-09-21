@@ -12,6 +12,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.post("/admin/product", adminController.postAddProduct);
+app.get("/admin/products", adminController.getAdminProducts);
 app.get("/products", shopController.getProducts);
 app.get("/products/:productId", shopController.getProduct);
 

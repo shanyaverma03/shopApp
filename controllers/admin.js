@@ -16,3 +16,13 @@ exports.postAddProduct = (req, res, next) => {
       res.status(500).send(err.message);
     });
 };
+
+exports.getAdminProducts = (req, res, next) => {
+  Product.fetchAll()
+    .then((products) => {
+      res.send(products);
+    })
+    .catch((err) => {
+      res.status(500).send(err.message);
+    });
+};

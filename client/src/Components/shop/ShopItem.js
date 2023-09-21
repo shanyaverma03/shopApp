@@ -11,20 +11,18 @@ const ShopItem = (props) => {
   };
 
   return (
-    <section className={classes.cardWrapper}>
-      <div className={classes.card}>
-        <img src={props.image} alt={props.description}></img>
-        <div className={classes.container}>
-          <h4>{props.title}</h4>
-          <p>{props.description}</p>
-          <p>{props.price}</p>
-          <div className={classes.actions}>
-            <button onClick={redirectToProductPage}>Details</button>
-            <button>Add to Cart</button>
-          </div>
+    <div className={classes.card}>
+      <img src={props.image} alt={props.description}></img>
+      <div className={classes.container}>
+        <h4>{props.title}</h4>
+        <p>{props.description}</p>
+        <p>{props.price}</p>
+        <div className={classes.actions}>
+          <button onClick={redirectToProductPage}>Details</button>
+          <button>Add to Cart</button>
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 
