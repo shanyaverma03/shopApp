@@ -5,7 +5,14 @@ exports.addProduct = (req, res, next) => {
   const description = req.body.description;
   const image = req.body.image;
   const price = req.body.price;
-  const product = new Product(title, description, image, price);
+  const product = new Product(
+    title,
+    description,
+    image,
+    price,
+    null,
+    req.user._id
+  );
 
   product
     .save()
