@@ -38,7 +38,7 @@ const Cart = () => {
         cart.map((product) => (
           <CartItem
             key={product._id}
-            id={product._id}
+            id={product.productId._id}
             title={product.productId.title}
             quantity={product.quantity}
           />
