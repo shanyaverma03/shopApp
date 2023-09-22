@@ -13,7 +13,7 @@ const Cart = () => {
       try {
         const response = await axios.get("/cart");
         console.log(response.data);
-        setCart(response.data);
+        setCart(response.data.cart.items);
       } catch (err) {
         console.log(err);
       }
@@ -39,7 +39,7 @@ const Cart = () => {
           <CartItem
             key={product._id}
             id={product._id}
-            title={product.title}
+            title={product.productId.title}
             quantity={product.quantity}
           />
         ))
