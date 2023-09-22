@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const EditProduct = () => {
   const { productId } = useParams();
+  const navigate = useNavigate();
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -59,6 +60,7 @@ const EditProduct = () => {
       });
 
       console.log(response);
+      navigate("/admin/products");
     } catch (err) {
       console.log(err);
     }
