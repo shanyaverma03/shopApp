@@ -20,9 +20,9 @@ exports.addToCart = (req, res, next) => {
 exports.getCart = (req, res, next) => {
   req.user
     .populate("cart.items.productId")
-    .then((products) => {
-      console.log(products);
-      res.json(products);
+    .then((user) => {
+      console.log(user);
+      res.json(user);
     })
     .catch((err) => {
       console.log(err);
