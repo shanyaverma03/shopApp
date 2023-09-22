@@ -46,15 +46,19 @@ exports.getProduct = (req, res, next) => {
 };
 
 exports.updateProduct = (req, res, next) => {
-  const title = req.body.title;
-  const description = req.body.description;
-  const image = req.body.image;
-  const price = req.body.price;
+  const { title, description, image, price } = req.body;
   const prodId = req.params.productId;
-  const product = new Product(title, description, image, price, prodId);
-  product
-    .save()
+
+  Product.findById(prodId)
     .then((product) => {
+      product.title = title;
+      product.description = description;
+      product.image = image;
+      product.price = price;
+      return product.save();
+    })
+    .then((product) => {
+      console.log("Updated product", product);
       res.json(product);
     })
     .catch((err) => {
