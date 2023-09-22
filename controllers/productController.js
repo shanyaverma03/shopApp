@@ -68,8 +68,9 @@ exports.updateProduct = (req, res, next) => {
 
 exports.deleteProduct = (req, res, next) => {
   const prodId = req.params.productId;
-  Product.deleteById(prodId)
+  Product.findByIdAndRemove(prodId)
     .then((message) => {
+      console.log("deleted", message);
       res.send(message);
     })
     .catch((err) => res.send(err.message));
