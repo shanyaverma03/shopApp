@@ -6,7 +6,7 @@ const OrderItem = (props) => {
       <div className={classes.card}>
         <div>Order= # {props.id}</div>
         {props.items.map((product) => (
-          <div key={product.id}>
+          <div key={product._id}>
             {product.title} ({product.quantity})
           </div>
         ))}
