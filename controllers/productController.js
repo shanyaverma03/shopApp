@@ -2,22 +2,19 @@ const Product = require("../models/product");
 const User = require("../models/user");
 
 exports.addProduct = (req, res, next) => {
-  const title = req.body.title;
-  const description = req.body.description;
-  const image = req.body.image;
-  const price = req.body.price;
-  const product = new Product(
+  const { title, description, image, price } = req.body;
+
+  const product = new Product({
     title,
     description,
     image,
     price,
-    null,
-    req.user._id
-  );
+  });
 
   product
     .save()
     .then((savedProduct) => {
+      console.log("created product", savedProduct);
       res.json(savedProduct);
     })
     .catch((err) => {

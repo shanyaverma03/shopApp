@@ -1,26 +1,28 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
 
 const productController = require("./controllers/productController");
 const cartController = require("./controllers/cartController");
 
-const mongoConnect = require("./util/database").mongoConnect;
+let dotenv = require("dotenv");
+dotenv.config();
 
-const User = require("./models/user");
+// const User = require("./models/user");
 
 const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use((req, res, next) => {
-  User.findById("650c9fb463c98ee2ee9e68cd")
-    .then((user) => {
-      req.user = new User(user.name, user.email, user.cart, user._id);
-      next();
-    })
-    .catch((err) => console.log(err));
-});
+// app.use((req, res, next) => {
+//   User.findById("650c9fb463c98ee2ee9e68cd")
+//     .then((user) => {
+//       req.user = new User(user.name, user.email, user.cart, user._id);
+//       next();
+//     })
+//     .catch((err) => console.log(err));
+// });
 
 app.get("/products", productController.getProducts);
 
@@ -37,5 +39,12 @@ app.post("/order", cartController.addOrder);
 
 app.get("/orders", cartController.getOrders);
 
-mongoConnect();
+mongoose
+  .connect(process.env.MONGO_CONNECT)
+  .then((result) => {
+    console.log("mongoose connected");
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 app.listen(8080);
