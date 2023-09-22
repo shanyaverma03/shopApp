@@ -23,8 +23,9 @@ exports.addProduct = (req, res, next) => {
 };
 
 exports.getProducts = (req, res, next) => {
-  Product.fetchAll()
+  Product.find()
     .then((products) => {
+      console.log(products);
       res.send(products);
     })
     .catch((err) => {
