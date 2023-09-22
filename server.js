@@ -2,8 +2,9 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
-const productController = require("./controllers/productController");
-const cartController = require("./controllers/cartController");
+const productRoutes = require("./routes/productRoutes");
+const cartRoutes = require("./routes/cartRoutes");
+const orderRoutes = require("./routes/orderRoutes");
 
 let dotenv = require("dotenv");
 dotenv.config();
@@ -25,20 +26,9 @@ app.use((req, res, next) => {
     .catch((err) => console.log(err));
 });
 
-app.get("/products", productController.getProducts);
-
-app.post("/product", productController.addProduct);
-app.get("/product/:productId", productController.getProduct);
-app.put("/product/:productId", productController.updateProduct);
-app.delete("/product/:productId", productController.deleteProduct);
-
-app.post("/cart", cartController.addToCart);
-app.get("/cart", cartController.getCart);
-app.delete("/cart/:productId", cartController.deleteFromCart);
-
-app.post("/order", cartController.addOrder);
-
-app.get("/orders", cartController.getOrders);
+app.use(productRoutes);
+app.use(cartRoutes);
+app.use(orderRoutes);
 
 mongoose
   .connect(process.env.MONGO_CONNECT)
