@@ -35,6 +35,7 @@ exports.getProducts = (req, res, next) => {
 
 exports.getProduct = (req, res, next) => {
   const prodId = req.params.productId;
+  //mongoose automatically converts our id to ObjectId
   Product.findById(prodId)
     .then((product) => {
       res.json(product);
