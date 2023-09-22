@@ -1,24 +1,34 @@
-import { useEffect } from "react";
 import axios from "axios";
 
+import classes from "./Login.module.css";
+
 const Login = () => {
-  useEffect(() => {
-    const login = async () => {
-      try {
-        const response = await axios.get("/login");
-        console.log(response);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    login();
-  }, []);
-
   return (
-    <>
-      <h1>Login</h1>
-    </>
+    <form>
+      <div className={classes.container}>
+        <label for="email">
+          <b>Email</b>
+        </label>
+        <input
+          type="text"
+          placeholder="Enter Email"
+          name="email"
+          required
+        ></input>
+
+        <label for="password">
+          <b>Password</b>
+        </label>
+        <input
+          type="password"
+          placeholder="Enter Password"
+          name="password"
+          required
+        ></input>
+
+        <button>Login</button>
+      </div>
+    </form>
   );
 };
 
