@@ -8,21 +8,22 @@ const cartController = require("./controllers/cartController");
 let dotenv = require("dotenv");
 dotenv.config();
 
-// const User = require("./models/user");
+const User = require("./models/user");
 
 const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// app.use((req, res, next) => {
-//   User.findById("650c9fb463c98ee2ee9e68cd")
-//     .then((user) => {
-//       req.user = new User(user.name, user.email, user.cart, user._id);
-//       next();
-//     })
-//     .catch((err) => console.log(err));
-// });
+//for every incoming req, get the user
+app.use((req, res, next) => {
+  User.findById("650da7bfb8c8c8438a810dac")
+    .then((user) => {
+      req.user = user; //user is a complete mongoose model. Hence all the mongoose functions can be called on it
+      next();
+    })
+    .catch((err) => console.log(err));
+});
 
 app.get("/products", productController.getProducts);
 
@@ -43,6 +44,20 @@ mongoose
   .connect(process.env.MONGO_CONNECT)
   .then((result) => {
     console.log("mongoose connected");
+    //create a new user only one it s not present in the collection
+    User.findOne().then((user) => {
+      if (!user) {
+        const user = new User({
+          name: "Shanya",
+          email: "shanya@test.com",
+          cart: {
+            items: [],
+          },
+        });
+
+        user.save();
+      }
+    });
   })
   .catch((err) => {
     console.log(err);
