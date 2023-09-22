@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const productRoutes = require("./routes/productRoutes");
 const cartRoutes = require("./routes/cartRoutes");
 const orderRoutes = require("./routes/orderRoutes");
+const authRoutes = require("./routes/authRoutes");
 
 let dotenv = require("dotenv");
 dotenv.config();
@@ -29,6 +30,7 @@ app.use((req, res, next) => {
 app.use(productRoutes);
 app.use(cartRoutes);
 app.use(orderRoutes);
+app.use(authRoutes);
 
 mongoose
   .connect(process.env.MONGO_CONNECT)
