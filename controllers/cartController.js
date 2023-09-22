@@ -52,9 +52,11 @@ exports.addOrder = (req, res, next) => {
         },
         products,
       });
+
       return order.save();
     })
     .then((result) => {
+      req.user.clearCart();
       res.json(result);
     })
     .catch((err) => {
@@ -64,7 +66,7 @@ exports.addOrder = (req, res, next) => {
 };
 
 exports.getOrders = (req, res, next) => {
-  Order.find()
+  Order.find({ "user.userId": req.user._id })
     .then((result) => {
       console.log(result);
       res.json(result);
@@ -73,14 +75,4 @@ exports.getOrders = (req, res, next) => {
       console.log(err);
       return res.send(err);
     });
-  // req.user
-  //   .getOrders()
-  //   .then((orders) => {
-  //     console.log(orders);
-  //     res.json(orders);
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  //     res.status(500).send(err.message);
-  //   });
 };
