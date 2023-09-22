@@ -51,3 +51,16 @@ exports.addOrder = (req, res, next) => {
       res.status(500).send(err.message);
     });
 };
+
+exports.getOrders = (req, res, next) => {
+  req.user
+    .getOrders()
+    .then((orders) => {
+      console.log(orders);
+      res.json(orders);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send(err.message);
+    });
+};

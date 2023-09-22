@@ -22,9 +22,9 @@ app.use((req, res, next) => {
     .catch((err) => console.log(err));
 });
 
-app.post("/product", productController.addProduct);
 app.get("/products", productController.getProducts);
 
+app.post("/product", productController.addProduct);
 app.get("/product/:productId", productController.getProduct);
 app.put("/product/:productId", productController.updateProduct);
 app.delete("/product/:productId", productController.deleteProduct);
@@ -34,6 +34,8 @@ app.get("/cart", cartController.getCart);
 app.delete("/cart/:productId", cartController.deleteFromCart);
 
 app.post("/order", cartController.addOrder);
+
+app.get("/orders", cartController.getOrders);
 
 mongoConnect();
 app.listen(8080);
