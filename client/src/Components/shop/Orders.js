@@ -22,7 +22,7 @@ const Orders = () => {
     <div>
       <h1>Orders</h1>
       {orders.map((order) => (
-        <OrderItem key={order._id} id={order._id} items={order.items} />
+        <OrderItem key={order._id} id={order._id} items={order.products} />
       ))}
     </div>
   );

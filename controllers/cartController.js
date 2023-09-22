@@ -1,5 +1,5 @@
 const Product = require("../models/product");
-const User = require("../models/user");
+const Order = require("../models/order");
 
 exports.addToCart = (req, res, next) => {
   const prodId = req.body.productId;
@@ -39,28 +39,48 @@ exports.deleteFromCart = (req, res, next) => {
 };
 
 exports.addOrder = (req, res, next) => {
-  const user = req.user;
-  user
-    .addOrder()
+  req.user
+    .populate("cart.items.productId")
+    .then((user) => {
+      const products = user.cart.items.map((item) => {
+        return { quantity: item.quantity, product: { ...item.productId._doc } };
+      });
+      const order = new Order({
+        user: {
+          name: req.user.name,
+          userId: req.user,
+        },
+        products,
+      });
+      return order.save();
+    })
+    .then((result) => {
+      res.json(result);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send(err);
+    });
+};
+
+exports.getOrders = (req, res, next) => {
+  Order.find()
     .then((result) => {
       console.log(result);
       res.json(result);
     })
     .catch((err) => {
       console.log(err);
-      res.status(500).send(err.message);
+      return res.send(err);
     });
-};
-
-exports.getOrders = (req, res, next) => {
-  req.user
-    .getOrders()
-    .then((orders) => {
-      console.log(orders);
-      res.json(orders);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).send(err.message);
-    });
+  // req.user
+  //   .getOrders()
+  //   .then((orders) => {
+  //     console.log(orders);
+  //     res.json(orders);
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //     res.status(500).send(err.message);
+  //   });
 };
