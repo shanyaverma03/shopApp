@@ -1,12 +1,13 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom"; //helps us to define the routes that we want to support in this app
 import RootLayout from "./pages/RootLayout";
-import AddProductPage from "./pages/AddProductPage";
+// import AddProductPage from "./pages/AddProductPage";
 import ShopPage from "./pages/ShopPage";
 import ProductDetailsPage from "./pages/ProductDetailsPage";
-import AdminProductsPage from "./pages/AdminProductsPage";
-import EditProductPage from "./pages/EditProductPage";
+// import AdminProductsPage from "./pages/AdminProductsPage";
+// import EditProductPage from "./pages/EditProductPage";
 import CartPage from "./pages/CartPage";
 import OrderPage from "./pages/OrderPage";
+import LoginPage from "./pages/LoginPage";
 
 const router = createBrowserRouter([
   {
@@ -16,10 +17,11 @@ const router = createBrowserRouter([
       { path: "/", element: <ShopPage /> },
       { path: "/cart", element: <CartPage /> },
       { path: "/orders", element: <OrderPage /> },
-      { path: "/admin/add-product", element: <AddProductPage /> },
+      { path: "/login", element: <LoginPage /> },
+      // { path: "/admin/add-product", element: <AddProductPage /> },
       { path: "/product/:productId", element: <ProductDetailsPage /> },
-      { path: "/admin/products", element: <AdminProductsPage /> },
-      { path: "/admin/edit-product/:productId", element: <EditProductPage /> },
+      // { path: "/admin/products", element: <AdminProductsPage /> },
+      // { path: "/admin/edit-product/:productId", element: <EditProductPage /> },
     ],
   },
 ]);
