@@ -3,10 +3,20 @@ import axios from "axios";
 import classes from "./Login.module.css";
 
 const Login = () => {
+  const onSubmitHandler = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await axios.post("/login");
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
-    <form>
+    <form onSubmit={onSubmitHandler}>
       <div className={classes.container}>
-        <label for="email">
+        <label>
           <b>Email</b>
         </label>
         <input
@@ -16,7 +26,7 @@ const Login = () => {
           required
         ></input>
 
-        <label for="password">
+        <label>
           <b>Password</b>
         </label>
         <input
