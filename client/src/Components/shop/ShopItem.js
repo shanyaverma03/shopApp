@@ -1,10 +1,13 @@
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
 
 import classes from "./ShopItem.module.css";
 import axios from "axios";
+import AuthContext from "../../store/auth-context";
 
 const ShopItem = (props) => {
   const navigate = useNavigate();
+  const { isLoggedIn } = useContext(AuthContext);
 
   const redirectToProductPage = () => {
     console.log("in redirect", props.id);
@@ -30,7 +33,9 @@ const ShopItem = (props) => {
           {props.showDetailsButton && (
             <button onClick={redirectToProductPage}>Details</button>
           )}
-          <button onClick={addToCartHandler}>Add to Cart</button>
+          {isLoggedIn && (
+            <button onClick={addToCartHandler}>Add to Cart</button>
+          )}
         </div>
       </div>
     </div>

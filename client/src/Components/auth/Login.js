@@ -1,11 +1,13 @@
 import axios from "axios";
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 import classes from "./Login.module.css";
 import AuthContext from "../../store/auth-context";
 
 const Login = () => {
   const { setIsLoggedIn } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
@@ -15,6 +17,7 @@ const Login = () => {
       if (response.data === true) {
         console.log("response data is true");
         setIsLoggedIn(true);
+        navigate("/");
       }
     } catch (err) {
       console.log(err);

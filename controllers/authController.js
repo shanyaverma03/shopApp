@@ -1,4 +1,5 @@
 const User = require("../models/user");
+
 exports.login = (req, res, next) => {
   console.log("in login");
 
@@ -9,4 +10,11 @@ exports.login = (req, res, next) => {
       res.send(req.session.isLoggedIn);
     })
     .catch((err) => console.log(err));
+};
+
+exports.logout = (req, res, next) => {
+  req.session.destroy((err) => {
+    console.log(err);
+  });
+  res.send("loggedout");
 };
