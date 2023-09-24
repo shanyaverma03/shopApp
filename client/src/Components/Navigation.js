@@ -13,6 +13,7 @@ const Navigation = () => {
     try {
       const response = await axios.post("/logout");
       console.log(response);
+      sessionStorage.setItem("isLoggedIn", false);
       setIsLoggedIn(false);
       navigate("/login");
     } catch (err) {

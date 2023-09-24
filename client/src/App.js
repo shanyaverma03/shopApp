@@ -32,6 +32,16 @@ const router = createBrowserRouter([
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  useEffect(() => {
+    const loggedInFromSession = sessionStorage.getItem("isLoggedIn");
+    console.log(loggedInFromSession);
+    if (loggedInFromSession === "true") {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, []);
+
   return (
     <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
       <RouterProvider router={router} />;

@@ -16,6 +16,7 @@ const Login = () => {
       console.log(response.data);
       if (response.data === true) {
         console.log("response data is true");
+        sessionStorage.setItem("isLoggedIn", true);
         setIsLoggedIn(true);
         navigate("/");
       }
