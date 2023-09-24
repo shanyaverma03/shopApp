@@ -2,6 +2,8 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import classes from "./AddProduct.module.css";
+
 const AddProduct = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -49,27 +51,21 @@ const AddProduct = () => {
   };
   return (
     <form onSubmit={onSubmitHandler}>
-      <label>
-        Title:
+      <div className={classes.container}>
+        <label>Title:</label>
         <input type="text" value={title} onChange={titleChangeHandler} />
-      </label>
-      <label>
-        Description:
+        <label>Description:</label>
         <input
           type="text"
           value={description}
           onChange={descriptionChangeHandler}
         />
-      </label>
-      <label>
-        Image:
+        <label>Image:</label>
         <input type="text" value={image} onChange={imageChangeHandler} />
-      </label>
-      <label>
-        Price:
+        <label>Price:</label>
         <input type="number" value={price} onChange={priceChangeHandler} />
-      </label>
-      <button type="Submit">Add Product</button>
+        <button type="Submit">Add Product</button>
+      </div>
     </form>
   );
 };
