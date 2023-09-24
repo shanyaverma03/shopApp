@@ -7,6 +7,7 @@ const productRoutes = require("./routes/productRoutes");
 const cartRoutes = require("./routes/cartRoutes");
 const orderRoutes = require("./routes/orderRoutes");
 const authRoutes = require("./routes/authRoutes");
+const MongoDBStore = require("connect-mongodb-session")(session);
 
 let dotenv = require("dotenv");
 dotenv.config();
@@ -14,6 +15,10 @@ dotenv.config();
 const User = require("./models/user");
 
 const app = express();
+const store = new MongoDBStore({
+  uri: process.env.MONGO_CONNECT,
+  collection: "sessions",
+});
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -22,6 +27,7 @@ app.use(
     secret: process.env.MY_SECRET,
     resave: false,
     saveUninitialized: false,
+    store,
   })
 );
 
