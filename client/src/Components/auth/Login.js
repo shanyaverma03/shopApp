@@ -1,13 +1,21 @@
 import axios from "axios";
+import { useContext } from "react";
 
 import classes from "./Login.module.css";
+import AuthContext from "../../store/auth-context";
 
 const Login = () => {
+  const { setIsLoggedIn } = useContext(AuthContext);
+
   const onSubmitHandler = async (event) => {
     event.preventDefault();
     try {
       const response = await axios.post("/login");
-      console.log(response);
+      console.log(response.data);
+      if (response.data === true) {
+        console.log("response data is true");
+        setIsLoggedIn(true);
+      }
     } catch (err) {
       console.log(err);
     }

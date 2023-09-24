@@ -5,7 +5,7 @@ import classes from "./Navigation.module.css";
 import AuthContext from "../store/auth-context";
 
 const Navigation = () => {
-  const ctx = useContext(AuthContext);
+  const { isLoggedIn } = useContext(AuthContext);
 
   return (
     <header className={classes.navigation}>
@@ -13,8 +13,8 @@ const Navigation = () => {
         <Link to="/">Shop</Link>
         <Link to="/cart">Cart</Link>
         <Link to="/orders">Orders</Link>
-        {ctx.isLoggedIn && <Link to="/admin/add-product">Add Product</Link>}
-        {ctx.isLoggedIn && <Link to="/admin/products">Admin Products</Link>}
+        {isLoggedIn && <Link to="/admin/add-product">Add Product</Link>}
+        {isLoggedIn && <Link to="/admin/products">Admin Products</Link>}
       </div>
 
       <Link to="/login">Login</Link>

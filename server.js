@@ -2,12 +2,12 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const session = require("express-session");
+const MongoDBStore = require("connect-mongodb-session")(session);
 
 const productRoutes = require("./routes/productRoutes");
 const cartRoutes = require("./routes/cartRoutes");
 const orderRoutes = require("./routes/orderRoutes");
 const authRoutes = require("./routes/authRoutes");
-const MongoDBStore = require("connect-mongodb-session")(session);
 
 let dotenv = require("dotenv");
 dotenv.config();
@@ -16,8 +16,12 @@ const User = require("./models/user");
 
 const app = express();
 const store = new MongoDBStore({
-  uri: process.env.MONGO_CONNECT,
+  uri: process.env.MONGO_CONNECT_SESSION,
   collection: "sessions",
+});
+
+store.on("error", function (error) {
+  console.log(error);
 });
 
 app.use(bodyParser.json());
@@ -27,19 +31,9 @@ app.use(
     secret: process.env.MY_SECRET,
     resave: false,
     saveUninitialized: false,
-    store,
+    store: store,
   })
 );
-
-//for every incoming req, get the user
-app.use((req, res, next) => {
-  User.findById("650da7bfb8c8c8438a810dac")
-    .then((user) => {
-      req.user = user; //user is a complete mongoose model. Hence all the mongoose functions can be called on it
-      next();
-    })
-    .catch((err) => console.log(err));
-});
 
 app.use(productRoutes);
 app.use(cartRoutes);
