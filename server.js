@@ -55,7 +55,7 @@ app.use(orderRoutes);
 app.use(authRoutes);
 
 mongoose
-  .connect(process.env.MONGO_CONNECT)
+  .connect("mongodb://localhost:27017/Shop" || process.env.MONGO_CONNECT)
   .then((result) => {
     console.log("mongoose connected");
     //create a new user only one it s not present in the collection
@@ -74,6 +74,7 @@ mongoose
     });
   })
   .catch((err) => {
+    console.log("mongoose not connected");
     console.log(err);
   });
 app.listen(8080);
