@@ -18,3 +18,7 @@ exports.logout = (req, res, next) => {
   });
   res.send("loggedout");
 };
+
+exports.signup = (req, res, next) => {
+  res.send("In signup");
+};

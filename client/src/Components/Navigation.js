@@ -32,6 +32,7 @@ const Navigation = () => {
       </div>
 
       {!isLoggedIn && <Link to="/login">Login</Link>}
+      {!isLoggedIn && <Link to="/signup">Signup</Link>}
       {isLoggedIn && <Link onClick={logoutHandler}>Logout</Link>}
     </header>
   );

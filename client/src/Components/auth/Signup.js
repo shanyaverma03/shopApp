@@ -1,25 +1,19 @@
-import axios from "axios";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
-import classes from "./Auth.module.css";
 import AuthContext from "../../store/auth-context";
+import classes from "./Auth.module.css";
 
-const Login = () => {
+const Signup = () => {
   const { setIsLoggedIn } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post("/login");
-      console.log(response.data);
-      if (response.data === true) {
-        console.log("response data is true");
-        sessionStorage.setItem("isLoggedIn", true);
-        setIsLoggedIn(true);
-        navigate("/");
-      }
+      const response = await axios.post("/signup");
+      console.log(response);
     } catch (err) {
       console.log(err);
     }
@@ -47,11 +41,20 @@ const Login = () => {
           name="password"
           required
         ></input>
+        <label>
+          <b>Confirm Password</b>
+        </label>
+        <input
+          type="password"
+          placeholder="Enter Password"
+          name="password"
+          required
+        ></input>
 
-        <button>Login</button>
+        <button>Signup</button>
       </div>
     </form>
   );
 };
 
-export default Login;
+export default Signup;
