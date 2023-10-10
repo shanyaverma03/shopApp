@@ -28,7 +28,11 @@ const Signup = () => {
   const onSubmitHandler = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post("/signup");
+      const response = await axios.post("/signup", {
+        email,
+        password,
+        confirmPassword,
+      });
       console.log(response);
     } catch (err) {
       console.log(err);

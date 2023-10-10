@@ -59,19 +59,6 @@ mongoose
   .then((result) => {
     console.log("mongoose connected");
     //create a new user only one it s not present in the collection
-    User.findOne().then((user) => {
-      if (!user) {
-        const user = new User({
-          name: "Shanya",
-          email: "shanya@test.com",
-          cart: {
-            items: [],
-          },
-        });
-
-        user.save();
-      }
-    });
   })
   .catch((err) => {
     console.log("mongoose not connected");

@@ -1,3 +1,5 @@
+const bcrypt = require("bcrypt");
+
 const User = require("../models/user");
 
 exports.login = (req, res, next) => {
@@ -19,6 +21,24 @@ exports.logout = (req, res, next) => {
   res.send("loggedout");
 };
 
-exports.signup = (req, res, next) => {
-  res.send("In signup");
+exports.signup = async (req, res, next) => {
+  const { email, password, confirmPassword } = req.body;
+  try {
+    const findUser = await User.findOne({ email });
+    if (findUser) {
+      return res.send("User already exists");
+    }
+    const hashedPassword = await bcrypt.hash(password, 12);
+    const user = new User({
+      email,
+      password: hashedPassword,
+      cart: { items: [] },
+    });
+    const response = await user.save();
+    console.log(response);
+    res.send("User created");
+  } catch (err) {
+    console.log(err);
+    res.send(err);
+  }
 };
