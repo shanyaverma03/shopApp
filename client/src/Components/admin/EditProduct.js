@@ -1,6 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+
+import AuthContext from "../../store/auth-context";
 
 const EditProduct = () => {
   const { productId } = useParams();
@@ -10,26 +12,31 @@ const EditProduct = () => {
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
   const [price, setPrice] = useState(0);
+  const { isLoggedIn } = useContext(AuthContext);
 
   useEffect(() => {
-    const fetchProductDetailToEdit = async () => {
-      const url = `/product/${productId}`;
-      const response = await axios.get(url);
-      console.log(response);
-      console.log(productId);
-      const title = response.data.title;
-      const description = response.data.description;
-      const price = response.data.price;
-      const image = response.data.image;
+    if (!isLoggedIn) {
+      navigate("/login");
+    } else {
+      const fetchProductDetailToEdit = async () => {
+        const url = `/product/${productId}`;
+        const response = await axios.get(url);
+        console.log(response);
+        console.log(productId);
+        const title = response.data.title;
+        const description = response.data.description;
+        const price = response.data.price;
+        const image = response.data.image;
 
-      setTitle(title);
-      setDescription(description);
-      setImage(image);
-      setPrice(price);
-    };
+        setTitle(title);
+        setDescription(description);
+        setImage(image);
+        setPrice(price);
+      };
 
-    fetchProductDetailToEdit();
-  }, [productId]);
+      fetchProductDetailToEdit();
+    }
+  }, [productId.isLoggedIn]);
 
   const titleChangeHandler = (event) => {
     setTitle(event.target.value);

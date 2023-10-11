@@ -1,25 +1,33 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 import AdminProductItem from "./AdminProductItem";
 import classes from "./AdminProducts.module.css";
+import AuthContext from "../../store/auth-context";
 
 const AdminProducts = () => {
   const [adminProducts, setAdminProducts] = useState([]);
+  const { isLoggedIn } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await axios.get("/products");
-        console.log(response.data);
-        setAdminProducts(response.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
+    if (!isLoggedIn) {
+      navigate("/login");
+    } else {
+      const fetchProducts = async () => {
+        try {
+          const response = await axios.get("/products");
+          console.log(response.data);
+          setAdminProducts(response.data);
+        } catch (err) {
+          console.log(err);
+        }
+      };
 
-    fetchProducts();
-  }, []);
+      fetchProducts();
+    }
+  }, [isLoggedIn]);
 
   return (
     <div className={classes.products}>

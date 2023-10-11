@@ -1,25 +1,31 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 import CartItem from "./CartItem";
+import AuthContext from "../../store/auth-context";
 
 const Cart = () => {
   const [cart, setCart] = useState([]);
   const navigate = useNavigate();
+  const { isLoggedIn } = useContext(AuthContext);
 
   useEffect(() => {
-    const getCart = async () => {
-      try {
-        const response = await axios.get("/cart");
-        console.log(response.data);
-        setCart(response.data.cart.items);
-      } catch (err) {
-        console.log(err);
-      }
-    };
+    if (!isLoggedIn) {
+      navigate("/login");
+    } else {
+      const getCart = async () => {
+        try {
+          const response = await axios.get("/cart");
+          console.log(response.data);
+          setCart(response.data.cart.items);
+        } catch (err) {
+          console.log(err);
+        }
+      };
 
-    getCart();
+      getCart();
+    }
   }, []);
 
   const orderHandler = async () => {

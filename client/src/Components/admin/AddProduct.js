@@ -1,8 +1,9 @@
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 import classes from "./AddProduct.module.css";
+import AuthContext from "../../store/auth-context";
 
 const AddProduct = () => {
   const [title, setTitle] = useState("");
@@ -11,6 +12,15 @@ const AddProduct = () => {
   const [price, setPrice] = useState(0);
 
   const navigate = useNavigate();
+  const { isLoggedIn } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      console.log("inside is logged in");
+    } else {
+      navigate("/login");
+    }
+  }, [isLoggedIn]);
 
   const titleChangeHandler = (event) => {
     setTitle(event.target.value);

@@ -1,22 +1,31 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import OrderItem from "./OrderItem";
+import AuthContext from "../../store/auth-context";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
+  const { isLoggedIn } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const getOrders = async () => {
-      try {
-        const response = await axios.get("/orders");
-        console.log(response.data);
-        setOrders(response.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getOrders();
-  }, []);
+    if (!isLoggedIn) {
+      navigate("/login");
+    } else {
+      const getOrders = async () => {
+        try {
+          const response = await axios.get("/orders");
+          console.log(response.data);
+          setOrders(response.data);
+        } catch (err) {
+          console.log(err);
+        }
+      };
+      getOrders();
+    }
+  }, [isLoggedIn]);
 
   return (
     <div>
