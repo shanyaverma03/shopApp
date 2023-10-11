@@ -34,6 +34,7 @@ const Signup = () => {
         confirmPassword,
       });
       console.log(response);
+      navigate("/login");
     } catch (err) {
       console.log(err);
     }

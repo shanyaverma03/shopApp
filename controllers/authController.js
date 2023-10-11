@@ -2,16 +2,29 @@ const bcrypt = require("bcrypt");
 
 const User = require("../models/user");
 
-exports.login = (req, res, next) => {
-  console.log("in login");
-
-  User.findById("650da7bfb8c8c8438a810dac")
-    .then((user) => {
-      req.session.isLoggedIn = true;
-      req.session.user = user;
-      res.send(req.session.isLoggedIn);
-    })
-    .catch((err) => console.log(err));
+exports.login = async (req, res, next) => {
+  const { email, enteredPassword } = req.body;
+  const hashedPassword = await bcrypt.hash(enteredPassword, 12);
+  try {
+    const findUser = await User.findOne({ email });
+    if (findUser) {
+      console.log("user found");
+      const doMatch = await bcrypt.compare(enteredPassword, findUser.password);
+      if (doMatch) {
+        console.log("password matched");
+        req.session.isLoggedIn = true;
+        req.session.user = findUser;
+        res.send(req.session.isLoggedIn);
+      } else {
+        console.log("password not matched");
+        res.send("Password is incorrect");
+      }
+    } else {
+      res.send("User doesn't exist! Please sign up");
+    }
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 exports.logout = (req, res, next) => {
