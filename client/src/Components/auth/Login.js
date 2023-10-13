@@ -32,6 +32,8 @@ const Login = () => {
         sessionStorage.setItem("isLoggedIn", true);
         setIsLoggedIn(true);
         navigate("/");
+      } else {
+        window.alert(response.data);
       }
     } catch (err) {
       console.log(err);

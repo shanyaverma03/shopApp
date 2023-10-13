@@ -34,7 +34,11 @@ const Signup = () => {
         confirmPassword,
       });
       console.log(response);
-      navigate("/login");
+      if (response.data === "User created") {
+        navigate("/login");
+      } else {
+        window.alert(response.data);
+      }
     } catch (err) {
       console.log(err);
     }
