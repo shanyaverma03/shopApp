@@ -2,6 +2,7 @@ const express = require("express");
 const check = require("express-validator");
 
 const authController = require("../controllers/authController");
+const User = require("../models/user");
 
 const router = express.Router();
 const checkFunction = check.check;
@@ -15,11 +16,11 @@ router.post(
     checkFunction("email")
       .isEmail()
       .withMessage("Please enter a valid email")
-      .custom((value, { req }) => {
-        if (value === "admin@admin.com") {
-          throw new Error("Can't enter this email");
+      .custom(async (value, { req }) => {
+        const findUser = await User.findOne({ email: value });
+        if (findUser) {
+          return Promise.reject("User already exists!");
         }
-        return true;
       }),
     body(
       "password",
