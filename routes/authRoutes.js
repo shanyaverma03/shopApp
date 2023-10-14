@@ -8,7 +8,20 @@ const router = express.Router();
 const checkFunction = check.check;
 const body = check.body;
 
-router.post("/login", authController.login);
+router.post(
+  "/login",
+  [
+    checkFunction("email")
+      .isEmail()
+      .withMessage("Please enter a valid email")
+      .normalizeEmail(),
+    body("password", "Please enter a valid password")
+      .isLength({ min: 6 })
+      .isAlphanumeric()
+      .trim(),
+  ],
+  authController.login
+);
 router.post("/logout", authController.logout);
 router.post(
   "/signup",
@@ -21,19 +34,23 @@ router.post(
         if (findUser) {
           return Promise.reject("User already exists!");
         }
-      }),
+      })
+      .normalizeEmail(),
     body(
       "password",
       "Please enter a password with only numbers and text and at least 6 characters"
     )
       .isLength({ min: 6 })
-      .isAlphanumeric(),
-    body("confirmPassword").custom((value, { req }) => {
-      if (value !== req.body.password) {
-        throw new Error("Passwords don't match!!");
-      }
-      return true;
-    }),
+      .isAlphanumeric()
+      .trim(),
+    body("confirmPassword")
+      .trim()
+      .custom((value, { req }) => {
+        if (value !== req.body.password) {
+          throw new Error("Passwords don't match!!");
+        }
+        return true;
+      }),
   ],
   authController.signup
 );

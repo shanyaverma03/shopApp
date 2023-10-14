@@ -6,6 +6,13 @@ const { validationResult } = check;
 
 exports.login = async (req, res, next) => {
   const { email, enteredPassword } = req.body;
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    console.log("errors is not empty");
+    console.log(errors.array());
+    //return res.status(422).send(errors.array()[0].msg);
+    return res.send(errors.array()[0].msg);
+  }
   const hashedPassword = await bcrypt.hash(enteredPassword, 12);
   try {
     const findUser = await User.findOne({ email });
