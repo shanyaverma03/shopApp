@@ -76,7 +76,7 @@ const Signup = () => {
         <input
           type="password"
           placeholder="Enter Password"
-          name="password"
+          name="confirmPassword"
           required
           onChange={onConfirmPasswordChangeHandler}
           value={confirmPassword}
