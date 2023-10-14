@@ -1,9 +1,17 @@
+const check = require("express-validator");
+
 const Product = require("../models/product");
 const User = require("../models/user");
+
+const { validationResult } = check;
 
 exports.addProduct = (req, res, next) => {
   const { title, description, image, price } = req.body;
 
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.send(errors.array()[0].msg);
+  }
   const product = new Product({
     title,
     description,
@@ -15,8 +23,7 @@ exports.addProduct = (req, res, next) => {
   product
     .save()
     .then((savedProduct) => {
-      console.log("created product", savedProduct);
-      res.json(savedProduct);
+      res.send("Product created");
     })
     .catch((err) => {
       res.status(500).send(err.message);
@@ -50,7 +57,10 @@ exports.getProduct = (req, res, next) => {
 exports.updateProduct = (req, res, next) => {
   const { title, description, image, price } = req.body;
   const prodId = req.params.productId;
-
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.send(errors.array()[0].msg);
+  }
   Product.findById(prodId)
     .then((product) => {
       product.title = title;
@@ -60,8 +70,7 @@ exports.updateProduct = (req, res, next) => {
       return product.save();
     })
     .then((product) => {
-      console.log("Updated product", product);
-      res.json(product);
+      res.send("Product updated");
     })
     .catch((err) => {
       console.log(err);

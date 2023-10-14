@@ -49,12 +49,15 @@ const AddProduct = () => {
         price,
       });
       console.log(res);
-
-      setTitle("");
-      setDescription("");
-      setImage("");
-      setPrice(0);
-      navigate("/admin/products");
+      if (res.data === "Product created") {
+        setTitle("");
+        setDescription("");
+        setImage("");
+        setPrice(0);
+        navigate("/admin/products");
+      } else {
+        window.alert(res.data);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -63,17 +66,33 @@ const AddProduct = () => {
     <form onSubmit={onSubmitHandler}>
       <div className={classes.container}>
         <label>Title:</label>
-        <input type="text" value={title} onChange={titleChangeHandler} />
+        <input
+          type="text"
+          value={title}
+          onChange={titleChangeHandler}
+          name="title"
+        />
         <label>Description:</label>
         <input
           type="text"
           value={description}
           onChange={descriptionChangeHandler}
+          name="description"
         />
         <label>Image:</label>
-        <input type="text" value={image} onChange={imageChangeHandler} />
+        <input
+          type="text"
+          value={image}
+          onChange={imageChangeHandler}
+          name="image"
+        />
         <label>Price:</label>
-        <input type="number" value={price} onChange={priceChangeHandler} />
+        <input
+          type="number"
+          value={price}
+          onChange={priceChangeHandler}
+          name="price"
+        />
         <button type="Submit">Add Product</button>
       </div>
     </form>

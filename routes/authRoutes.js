@@ -15,10 +15,6 @@ router.post(
       .isEmail()
       .withMessage("Please enter a valid email")
       .normalizeEmail(),
-    body("password", "Please enter a valid password")
-      .isLength({ min: 6 })
-      .isAlphanumeric()
-      .trim(),
   ],
   authController.login
 );

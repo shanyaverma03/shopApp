@@ -67,7 +67,11 @@ const EditProduct = () => {
       });
 
       console.log(response);
-      navigate("/admin/products");
+      if (response.data === "Product updated") {
+        navigate("/admin/products");
+      } else {
+        window.alert(response.data);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -77,7 +81,12 @@ const EditProduct = () => {
     <form onSubmit={onSubmitHandler}>
       <label>
         Title:
-        <input type="text" value={title} onChange={titleChangeHandler} />
+        <input
+          type="text"
+          value={title}
+          onChange={titleChangeHandler}
+          name="title"
+        />
       </label>
       <label>
         Description:
@@ -85,15 +94,26 @@ const EditProduct = () => {
           type="text"
           value={description}
           onChange={descriptionChangeHandler}
+          name="description"
         />
       </label>
       <label>
         Image:
-        <input type="text" value={image} onChange={imageChangeHandler} />
+        <input
+          type="text"
+          value={image}
+          onChange={imageChangeHandler}
+          name="image"
+        />
       </label>
       <label>
         Price:
-        <input type="number" value={price} onChange={priceChangeHandler} />
+        <input
+          type="number"
+          value={price}
+          onChange={priceChangeHandler}
+          name="price"
+        />
       </label>
       <button type="Submit">Update Product</button>
     </form>
