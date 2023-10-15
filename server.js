@@ -17,7 +17,7 @@ const User = require("./models/user");
 
 const app = express();
 const store = new MongoDBStore({
-  uri: process.env.MONGO_CONNECT_SESSION,
+  uri: "mongodb://localhost:27017/Shop" || process.env.MONGO_CONNECT_SESSION,
   collection: "sessions",
 });
 
@@ -25,9 +25,18 @@ store.on("error", function (error) {
   console.log(error);
 });
 
+const fileStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, images);
+  },
+  filename: (req, file, cb) => {
+    cb(null, new Date().toISOString() + "-" + file.originalname);
+  },
+});
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(multer({ dest: "images" }).single("image"));
+app.use(multer({ storage: fileStorage }).single("image"));
 app.use(
   session({
     secret: process.env.MY_SECRET,
