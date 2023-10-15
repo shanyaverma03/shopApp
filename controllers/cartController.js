@@ -3,6 +3,7 @@ const path = require("path");
 
 const Product = require("../models/product");
 const Order = require("../models/order");
+const order = require("../models/order");
 
 exports.addToCart = (req, res, next) => {
   const prodId = req.body.productId;
@@ -82,14 +83,27 @@ exports.getOrders = (req, res, next) => {
 
 exports.getInvoice = (req, res, next) => {
   const orderId = req.params.orderId;
-  const invoiceName = "invoice-" + orderId + ".pdf";
-  const invoicePath = path.join("data", "invoices", invoiceName);
-  fs.readFile(invoicePath, (err, data) => {
-    if (err) {
+  Order.findById(orderId)
+    .then((order) => {
+      if (!order) {
+        return res.send("Order not found");
+      }
+      if (order.user.userId.toString() !== req.user._id.toString()) {
+        return res.send("User not authenticated");
+      }
+      const invoiceName = "invoice-" + orderId + ".pdf";
+      const invoicePath = path.join("data", "invoices", invoiceName);
+      fs.readFile(invoicePath, (err, data) => {
+        if (err) {
+          console.log(err);
+          return res.send("Error in reading file");
+        }
+        res.setHeader("Content-Type", "application/pdf");
+        res.send(data);
+      });
+    })
+    .catch((err) => {
       console.log(err);
-      return res.send("Error in reading file");
-    }
-    res.setHeader("Content-Type", "application/pdf");
-    res.send(data);
-  });
+      return res.send("An error occured");
+    });
 };
