@@ -2,13 +2,13 @@ import axios from "axios";
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
-import classes from "./AddProduct.module.css";
+import classes from "./Product.module.css";
 import AuthContext from "../../store/auth-context";
 
 const AddProduct = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState(null);
   const [price, setPrice] = useState(0);
 
   const navigate = useNavigate();
@@ -31,7 +31,7 @@ const AddProduct = () => {
   };
 
   const imageChangeHandler = (event) => {
-    setImage(event.target.value);
+    setImage(event.target.files[0]);
   };
 
   const priceChangeHandler = (event) => {
@@ -42,17 +42,25 @@ const AddProduct = () => {
     event.preventDefault();
     console.log("submitted");
     try {
-      const res = await axios.post("/product", {
-        title,
-        description,
-        image,
-        price,
-      });
+      const res = await axios.post(
+        "/product",
+        {
+          title,
+          description,
+          image,
+          price,
+        },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data", // Important for file uploads
+          },
+        }
+      );
       console.log(res);
       if (res.data === "Product created") {
         setTitle("");
         setDescription("");
-        setImage("");
+        setImage([]);
         setPrice(0);
         navigate("/admin/products");
       } else {
@@ -63,7 +71,7 @@ const AddProduct = () => {
     }
   };
   return (
-    <form onSubmit={onSubmitHandler}>
+    <form onSubmit={onSubmitHandler} encType="multipart/form-data">
       <div className={classes.container}>
         <label>Title:</label>
         <input
@@ -80,12 +88,7 @@ const AddProduct = () => {
           name="description"
         />
         <label>Image:</label>
-        <input
-          type="text"
-          value={image}
-          onChange={imageChangeHandler}
-          name="image"
-        />
+        <input type="file" name="image" onChange={imageChangeHandler} />
         <label>Price:</label>
         <input
           type="number"

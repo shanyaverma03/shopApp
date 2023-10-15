@@ -15,7 +15,7 @@ router.post(
       .isString()
       .isLength({ min: 3 })
       .trim(),
-    body("image", "Please enter a valid image url").isURL(),
+
     body("price", "Please choose a valid price").isNumeric(),
     body("description", "Please enter a valid description")
       .trim()

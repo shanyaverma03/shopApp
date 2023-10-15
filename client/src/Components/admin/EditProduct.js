@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import AuthContext from "../../store/auth-context";
+import classes from "./Product.module.css";
 
 const EditProduct = () => {
   const { productId } = useParams();
@@ -79,43 +80,32 @@ const EditProduct = () => {
 
   return (
     <form onSubmit={onSubmitHandler}>
-      <label>
-        Title:
+      <div className={classes.container}>
+        <label>Title:</label>
         <input
           type="text"
           value={title}
           onChange={titleChangeHandler}
           name="title"
         />
-      </label>
-      <label>
-        Description:
+        <label>Description:</label>
         <input
           type="text"
           value={description}
           onChange={descriptionChangeHandler}
           name="description"
         />
-      </label>
-      <label>
-        Image:
-        <input
-          type="text"
-          value={image}
-          onChange={imageChangeHandler}
-          name="image"
-        />
-      </label>
-      <label>
-        Price:
+        <label>Image:</label>
+        <input type="file" onChange={imageChangeHandler} name="image" />
+        <label>Price:</label>
         <input
           type="number"
           value={price}
           onChange={priceChangeHandler}
           name="price"
         />
-      </label>
-      <button type="Submit">Update Product</button>
+        <button type="Submit">Update Product</button>
+      </div>
     </form>
   );
 };

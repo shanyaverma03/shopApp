@@ -6,7 +6,10 @@ const User = require("../models/user");
 const { validationResult } = check;
 
 exports.addProduct = (req, res, next) => {
-  const { title, description, image, price } = req.body;
+  const { title, description, price } = req.body;
+  const image = req.file;
+  console.log(title);
+  console.log(image);
 
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
