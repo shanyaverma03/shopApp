@@ -5,6 +5,8 @@ const User = require("../models/user");
 
 const { validationResult } = check;
 
+const ITMES_PER_PAGE = 2;
+
 exports.addProduct = (req, res, next) => {
   const { title, description, price } = req.body;
   const imageReceived = req.file;
@@ -35,10 +37,12 @@ exports.addProduct = (req, res, next) => {
 };
 
 exports.getProducts = (req, res, next) => {
+  const page = req.query.page;
+  console.log(page);
   Product.find()
-    .populate("userId")
+    .skip((page - 1) * ITMES_PER_PAGE)
+    .limit(ITMES_PER_PAGE)
     .then((products) => {
-      console.log(products);
       res.send(products);
     })
     .catch((err) => {
