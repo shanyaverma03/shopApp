@@ -7,10 +7,11 @@ const { validationResult } = check;
 
 exports.addProduct = (req, res, next) => {
   const { title, description, price } = req.body;
-  const image = req.file;
-  console.log(title);
-  console.log(image);
-
+  const imageReceived = req.file;
+  if (!imageReceived) {
+    return res.send("Please add a valid image");
+  }
+  const image = imageReceived.path;
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.send(errors.array()[0].msg);
@@ -58,7 +59,8 @@ exports.getProduct = (req, res, next) => {
 };
 
 exports.updateProduct = (req, res, next) => {
-  const { title, description, image, price } = req.body;
+  const { title, description, price } = req.body;
+  const imageReceived = req.file;
   const prodId = req.params.productId;
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -68,7 +70,9 @@ exports.updateProduct = (req, res, next) => {
     .then((product) => {
       product.title = title;
       product.description = description;
-      product.image = image;
+      if (imageReceived) {
+        product.image = imageReceived.path;
+      }
       product.price = price;
       return product.save();
     })

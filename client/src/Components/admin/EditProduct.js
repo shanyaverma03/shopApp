@@ -11,7 +11,7 @@ const EditProduct = () => {
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState(null);
   const [price, setPrice] = useState(0);
   const { isLoggedIn } = useContext(AuthContext);
 
@@ -37,7 +37,7 @@ const EditProduct = () => {
 
       fetchProductDetailToEdit();
     }
-  }, [productId.isLoggedIn]);
+  }, [productId.isLoggedIn, isLoggedIn, navigate, productId]);
 
   const titleChangeHandler = (event) => {
     setTitle(event.target.value);
@@ -48,7 +48,7 @@ const EditProduct = () => {
   };
 
   const imageChangeHandler = (event) => {
-    setImage(event.target.value);
+    setImage(event.target.files[0]);
   };
 
   const priceChangeHandler = (event) => {
@@ -59,13 +59,21 @@ const EditProduct = () => {
     event.preventDefault();
     try {
       console.log(title);
-      const response = await axios.put(`/product/${productId}`, {
-        title,
-        description,
-        image,
-        price,
-        productId,
-      });
+      const response = await axios.put(
+        `/product/${productId}`,
+        {
+          title,
+          description,
+          image,
+          price,
+          productId,
+        },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data", // Important for file uploads
+          },
+        }
+      );
 
       console.log(response);
       if (response.data === "Product updated") {
@@ -79,7 +87,7 @@ const EditProduct = () => {
   };
 
   return (
-    <form onSubmit={onSubmitHandler}>
+    <form onSubmit={onSubmitHandler} encType="multipart/form-data">
       <div className={classes.container}>
         <label>Title:</label>
         <input
