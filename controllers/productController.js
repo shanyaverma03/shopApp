@@ -36,18 +36,16 @@ exports.addProduct = (req, res, next) => {
     });
 };
 
-exports.getProducts = (req, res, next) => {
+exports.getProducts = async (req, res, next) => {
   const page = req.query.page;
-  console.log(page);
-  Product.find()
-    .skip((page - 1) * ITMES_PER_PAGE)
-    .limit(ITMES_PER_PAGE)
-    .then((products) => {
-      res.send(products);
-    })
-    .catch((err) => {
-      res.status(500).send(err.message);
-    });
+  try {
+    const products = await Product.find()
+      .skip((page - 1) * ITMES_PER_PAGE)
+      .limit(ITMES_PER_PAGE);
+    res.send(products);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
 };
 
 exports.getProduct = (req, res, next) => {

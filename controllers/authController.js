@@ -7,7 +7,6 @@ const { validationResult } = check;
 exports.login = async (req, res, next) => {
   const { email, enteredPassword } = req.body;
 
-  const hashedPassword = await bcrypt.hash(enteredPassword, 12);
   try {
     const findUser = await User.findOne({ email });
     if (findUser) {
