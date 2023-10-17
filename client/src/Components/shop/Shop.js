@@ -18,7 +18,7 @@ const Products = () => {
           },
         });
         console.log(response.data);
-        setProducts(response.data);
+        setProducts(response.data.products);
       } catch (err) {
         console.log(err);
       }

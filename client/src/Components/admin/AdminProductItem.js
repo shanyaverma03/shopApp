@@ -10,15 +10,6 @@ const AdminProductItem = (props) => {
     navigate(`/admin/edit-product/${props.id}`);
   };
 
-  const deleteProductHandler = async () => {
-    try {
-      const response = await axios.delete(`/product/${props.id}`);
-      console.log(response);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   return (
     <div className={classes.card}>
       <img src={props.image} alt={props.description}></img>
@@ -28,7 +19,13 @@ const AdminProductItem = (props) => {
         <p>{props.price}</p>
         <div className={classes.actions}>
           <button onClick={navToEditProductPage}>Edit</button>
-          <button onClick={deleteProductHandler}>Delete</button>
+          <button
+            onClick={() => {
+              props.deleteProductHandler(props.id);
+            }}
+          >
+            Delete
+          </button>
         </div>
       </div>
     </div>

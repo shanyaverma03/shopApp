@@ -12,6 +12,21 @@ const AdminProducts = () => {
   const { isLoggedIn } = useContext(AuthContext);
   const navigate = useNavigate();
 
+  const deleteProductHandler = async (id) => {
+    try {
+      const response = await axios.delete(`/product/${id}`);
+      const updatedResponse = await axios.get("/products", {
+        params: {
+          page: currentPage,
+        },
+      });
+
+      setAdminProducts(updatedResponse.data.products);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
     if (!isLoggedIn) {
       navigate("/login");
@@ -23,8 +38,8 @@ const AdminProducts = () => {
               page: currentPage,
             },
           });
-          console.log(response.data);
-          setAdminProducts(response.data);
+          console.log(response.data.products);
+          setAdminProducts(response.data.products);
         } catch (err) {
           console.log(err);
         }
@@ -32,7 +47,7 @@ const AdminProducts = () => {
 
       fetchProducts();
     }
-  }, [isLoggedIn, currentPage, navigate]);
+  }, [isLoggedIn, currentPage, navigate, adminProducts]);
 
   return (
     <>
@@ -47,12 +62,13 @@ const AdminProducts = () => {
               description={product.description}
               price={product.price}
               image={product.image}
+              deleteProductHandler={deleteProductHandler}
             />
           ))}
       </div>
       <section className={classes.pagination}>
         <Link
-          to="/?page=1"
+          to="?page=1"
           onClick={() => {
             setCurrentPage(1);
           }}
@@ -60,7 +76,7 @@ const AdminProducts = () => {
           1
         </Link>
         <Link
-          to="/?page=2"
+          to="?page=2"
           onClick={() => {
             setCurrentPage(2);
           }}

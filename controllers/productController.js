@@ -39,10 +39,20 @@ exports.addProduct = (req, res, next) => {
 exports.getProducts = async (req, res, next) => {
   const page = req.query.page;
   try {
+    const totalProducts = await Product.find().count();
     const products = await Product.find()
       .skip((page - 1) * ITMES_PER_PAGE)
       .limit(ITMES_PER_PAGE);
-    res.send(products);
+    const productDetails = {
+      products,
+      totalProducts,
+      hasNextPage: ITMES_PER_PAGE * page < totalProducts,
+      hasPreviousPage: page > 1,
+      nextPage: parseInt(page) + 1,
+      previousPage: parseInt(page) - 1,
+      lastPage: Math.ceil(totalProducts / ITMES_PER_PAGE),
+    };
+    res.send(productDetails);
   } catch (err) {
     res.status(500).send(err.message);
   }
