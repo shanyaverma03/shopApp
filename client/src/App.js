@@ -13,6 +13,7 @@ import LoginPage from "./pages/LoginPage";
 import AddProductPage from "./pages/AddProductPage";
 import SignupPage from "./pages/SignupPage";
 import InvoicePage from "./pages/InvoicePage";
+import CheckoutPage from "./pages/CheckoutPage";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,7 @@ const router = createBrowserRouter([
     children: [
       { path: "/", element: <ShopPage /> },
       { path: "/cart", element: <CartPage /> },
+      { path: "/checkout", element: <CheckoutPage /> },
       { path: "/orders", element: <OrderPage /> },
       { path: "/orders/:orderId", element: <InvoicePage /> },
       { path: "/login", element: <LoginPage /> },

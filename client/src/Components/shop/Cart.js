@@ -28,11 +28,11 @@ const Cart = () => {
     }
   }, []);
 
-  const orderHandler = async () => {
+  const orderHandler = () => {
     try {
-      const response = await axios.post("/order");
-      console.log(response);
-      navigate("/orders");
+      //const response = await axios.post("/order");
+      //console.log(response);
+      navigate("/checkout");
     } catch (err) {
       console.log(err);
     }
@@ -47,6 +47,7 @@ const Cart = () => {
             id={product.productId._id}
             title={product.productId.title}
             quantity={product.quantity}
+            price={product.productId.price}
           />
         ))
       ) : (

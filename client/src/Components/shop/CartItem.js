@@ -16,7 +16,7 @@ const CartItem = (props) => {
       <div className={classes.card}>
         <p>{props.title}</p>
         <p>Quantity: {props.quantity}</p>
-        <button onClick={deleteItemFromCartHandler}>Delete</button>
+        <p>Total: {props.quantity * props.price}</p>
       </div>
     </div>
   );
