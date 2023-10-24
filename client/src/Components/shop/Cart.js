@@ -14,9 +14,14 @@ const Cart = () => {
     if (!isLoggedIn) {
       navigate("/login");
     } else {
+      const token = localStorage.getItem("token");
       const getCart = async () => {
         try {
-          const response = await axios.get("/cart");
+          const response = await axios.get("/cart", {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          });
           console.log(response.data);
           setCart(response.data.cart.items);
         } catch (err) {

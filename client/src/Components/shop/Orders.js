@@ -16,7 +16,12 @@ const Orders = () => {
     } else {
       const getOrders = async () => {
         try {
-          const response = await axios.get("/orders");
+          const token = localStorage.getItem("token");
+          const response = await axios.get("/orders", {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          });
           console.log(response.data);
           setOrders(response.data);
         } catch (err) {

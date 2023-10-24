@@ -17,7 +17,12 @@ const Checkout = () => {
     } else {
       const getCart = async () => {
         try {
-          const response = await axios.get("/cart");
+          const token = localStorage.getItem("token");
+          const response = await axios.get("/cart", {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          });
           const items = response.data.cart.items;
           setCheckout(items);
           console.log("test");

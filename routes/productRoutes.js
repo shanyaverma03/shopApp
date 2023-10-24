@@ -2,6 +2,7 @@ const express = require("express");
 const check = require("express-validator");
 
 const productController = require("../controllers/productController");
+const isAuth = require("../middleware/is-auth");
 
 const router = express.Router();
 const body = check.body;
@@ -10,6 +11,7 @@ router.get("/products", productController.getProducts);
 
 router.post(
   "/product",
+  isAuth,
   [
     body("title", "Please enter a valid title")
       .isString()
@@ -23,9 +25,12 @@ router.post(
   ],
   productController.addProduct
 );
-router.get("/product/:productId", productController.getProduct);
+
+router.get("/product/:productId", isAuth, productController.getProduct);
+
 router.put(
   "/product/:productId",
+  isAuth,
   [
     body("title", "Please enter a valid title")
       .isString()
@@ -38,6 +43,6 @@ router.put(
   ],
   productController.updateProduct
 );
-router.delete("/product/:productId", productController.deleteProduct);
+router.delete("/product/:productId", isAuth, productController.deleteProduct);
 
 module.exports = router;

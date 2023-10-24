@@ -15,9 +15,19 @@ const ShopItem = (props) => {
   };
 
   const addToCartHandler = async () => {
-    const response = await axios.post("/cart", {
-      productId: props.id,
-    });
+    const token = localStorage.getItem("token");
+    console.log(token);
+    const response = await axios.post(
+      "/cart",
+      {
+        productId: props.id,
+      },
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      }
+    );
     console.log(response);
     navigate("/cart");
   };

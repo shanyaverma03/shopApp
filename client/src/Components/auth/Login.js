@@ -26,10 +26,10 @@ const Login = () => {
         email,
         enteredPassword: password,
       });
-      console.log(response.data);
-      if (response.data === true) {
-        console.log("response data is true");
-        sessionStorage.setItem("isLoggedIn", true);
+      console.log(response.data.token);
+      if (response.data.token) {
+        console.log("We received the token");
+        localStorage.setItem("token", response.data.token);
         setIsLoggedIn(true);
         navigate("/");
       } else {

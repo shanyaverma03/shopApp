@@ -14,7 +14,12 @@ const AdminProducts = () => {
 
   const deleteProductHandler = async (id) => {
     try {
-      const response = await axios.delete(`/product/${id}`);
+      const token = localStorage.getItem("token");
+      const response = await axios.delete(`/product/${id}`, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
       const updatedResponse = await axios.get("/products", {
         params: {
           page: currentPage,
@@ -47,7 +52,7 @@ const AdminProducts = () => {
 
       fetchProducts();
     }
-  }, [isLoggedIn, currentPage, navigate, adminProducts]);
+  }, [isLoggedIn, currentPage, navigate]);
 
   return (
     <>
@@ -61,7 +66,7 @@ const AdminProducts = () => {
               title={product.title}
               description={product.description}
               price={product.price}
-              image={product.image}
+              image={`http://localhost:8080/` + product.image}
               deleteProductHandler={deleteProductHandler}
             />
           ))}

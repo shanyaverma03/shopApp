@@ -3,13 +3,14 @@ const path = require("path");
 
 const Product = require("../models/product");
 const Order = require("../models/order");
-const order = require("../models/order");
+const User = require("../models/user");
 
-exports.addToCart = (req, res, next) => {
+exports.addToCart = async (req, res, next) => {
   const prodId = req.body.productId;
+  const foundUser = await User.findById(req.userId);
   Product.findById(prodId)
     .then((product) => {
-      return req.user.addToCart(product);
+      return foundUser.addToCart(product);
     })
     .then((result) => {
       res.json(result);
@@ -21,8 +22,9 @@ exports.addToCart = (req, res, next) => {
     });
 };
 
-exports.getCart = (req, res, next) => {
-  req.user
+exports.getCart = async (req, res, next) => {
+  const foundUser = await User.findById(req.userId);
+  foundUser
     .populate("cart.items.productId")
     .then((user) => {
       console.log(user);
@@ -34,16 +36,18 @@ exports.getCart = (req, res, next) => {
     });
 };
 
-exports.deleteFromCart = (req, res, next) => {
+exports.deleteFromCart = async (req, res, next) => {
   const prodId = req.params.productId;
-  req.user
+  const foundUser = await User.findById(req.userId);
+  foundUser
     .deleteItemFromCart(prodId)
     .then(res.send("deleted"))
     .catch((err) => res.status(500).send(err.message));
 };
 
-exports.addOrder = (req, res, next) => {
-  req.user
+exports.addOrder = async (req, res, next) => {
+  const foundUser = await User.findById(req.userId);
+  foundUser
     .populate("cart.items.productId")
     .then((user) => {
       const products = user.cart.items.map((item) => {
@@ -60,7 +64,7 @@ exports.addOrder = (req, res, next) => {
       return order.save();
     })
     .then((result) => {
-      req.user.clearCart();
+      foundUser.clearCart();
       res.json(result);
     })
     .catch((err) => {
@@ -69,8 +73,9 @@ exports.addOrder = (req, res, next) => {
     });
 };
 
-exports.getOrders = (req, res, next) => {
-  Order.find({ "user.userId": req.user._id })
+exports.getOrders = async (req, res, next) => {
+  const foundUser = await User.findById(req.userId);
+  Order.find({ "user.userId": foundUser._id })
     .then((result) => {
       console.log(result);
       res.json(result);
@@ -81,14 +86,15 @@ exports.getOrders = (req, res, next) => {
     });
 };
 
-exports.getInvoice = (req, res, next) => {
+exports.getInvoice = async (req, res, next) => {
   const orderId = req.params.orderId;
+  const foundUser = await User.findById(req.userId);
   Order.findById(orderId)
     .then((order) => {
       if (!order) {
         return res.send("Order not found");
       }
-      if (order.user.userId.toString() !== req.user._id.toString()) {
+      if (order.user.userId.toString() !== foundUser._id.toString()) {
         return res.send("User not authenticated");
       }
       const invoiceName = "invoice-" + orderId + ".pdf";

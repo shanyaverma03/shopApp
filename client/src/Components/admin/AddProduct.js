@@ -42,20 +42,17 @@ const AddProduct = () => {
     event.preventDefault();
     console.log("submitted");
     try {
-      const res = await axios.post(
-        "/product",
-        {
-          title,
-          description,
-          image,
-          price,
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("description", description);
+      formData.append("image", image);
+      formData.append("price", price);
+      const token = localStorage.getItem("token");
+      const res = await axios.post("/product", formData, {
+        headers: {
+          Authorization: "Bearer " + token,
         },
-        {
-          headers: {
-            "Content-Type": "multipart/form-data", // Important for file uploads
-          },
-        }
-      );
+      });
       console.log(res);
       if (res.data === "Product created") {
         setTitle("");

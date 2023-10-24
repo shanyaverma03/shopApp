@@ -20,19 +20,28 @@ const EditProduct = () => {
       navigate("/login");
     } else {
       const fetchProductDetailToEdit = async () => {
-        const url = `/product/${productId}`;
-        const response = await axios.get(url);
-        console.log(response);
-        console.log(productId);
-        const title = response.data.title;
-        const description = response.data.description;
-        const price = response.data.price;
-        const image = response.data.image;
+        try {
+          const url = `/product/${productId}`;
+          const token = localStorage.getItem("token");
+          const response = await axios.get(url, {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          });
+          console.log(response);
+          const title = response.data.title;
+          const description = response.data.description;
+          const price = response.data.price;
+          const image = response.data.image;
 
-        setTitle(title);
-        setDescription(description);
-        setImage(image);
-        setPrice(price);
+          setTitle(title);
+          setDescription(description);
+          setImage(image);
+          setPrice(price);
+        } catch (err) {
+          window.alert("Not able to authenticate");
+          console.log(err);
+        }
       };
 
       fetchProductDetailToEdit();
@@ -59,6 +68,7 @@ const EditProduct = () => {
     event.preventDefault();
     try {
       console.log(title);
+      const token = localStorage.getItem("token");
       const response = await axios.put(
         `/product/${productId}`,
         {
@@ -70,7 +80,8 @@ const EditProduct = () => {
         },
         {
           headers: {
-            "Content-Type": "multipart/form-data", // Important for file uploads
+            "Content-Type": "multipart/form-data",
+            Authorization: "Bearer " + token,
           },
         }
       );

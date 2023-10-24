@@ -8,22 +8,23 @@ const { validationResult } = check;
 const ITMES_PER_PAGE = 2;
 
 exports.addProduct = (req, res, next) => {
-  const { title, description, price } = req.body;
-  const imageReceived = req.file;
-  if (!imageReceived) {
-    return res.send("Please add a valid image");
-  }
-  const image = imageReceived.path;
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.send(errors.array()[0].msg);
   }
+  const { title, description, price } = req.body;
+  if (!req.file) {
+    return res.status(422).send("No image has been provided");
+  }
+  const imageReceived = req.file;
+  const image = imageReceived.path;
+
   const product = new Product({
     title,
     description,
     image,
     price,
-    userId: req.user,
+    userId: req.userId,
   });
 
   product
@@ -59,6 +60,7 @@ exports.getProducts = async (req, res, next) => {
 };
 
 exports.getProduct = (req, res, next) => {
+  console.log("inside get product controller");
   const prodId = req.params.productId;
   //mongoose automatically converts our id to ObjectId
   Product.findById(prodId)

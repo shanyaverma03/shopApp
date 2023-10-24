@@ -9,7 +9,12 @@ const ProductDetail = () => {
 
   useEffect(() => {
     const fetchProductDetails = async () => {
-      const response = await axios.get(`/product/${productId}`);
+      const token = localStorage.getItem("token");
+      const response = await axios.get(`/product/${productId}`, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
       console.log(response);
       console.log(productId);
       const id = response.data._id;
